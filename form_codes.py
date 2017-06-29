@@ -36,13 +36,13 @@ def find_labels(lang=None):
     if not lang is None:
         lang_trans_path = '//xf:translation[@lang=\'%s\']/xf:text' % lang
         lang_trans = tree.xpath(lang_trans_path, namespaces=NSMAP)
-        if not lang_trans is None:
+        if len(lang_trans):
             return lang_trans
     default_trans = tree.xpath('//xf:translation[@default=\'true()\']/xf:text', namespaces=NSMAP)
-    if not default_trans is None:
+    if len(default_trans):
         return default_trans
     return tree.xpath('//xf:translation[1]/xf:text', namespaces=NSMAP)
-        
+
 labels = { t.attrib['id']: label_value(t) for t in find_labels(args.lang) }
 
 trans_re = re.compile('jr[:]itext[(][\'"](.*?)[\'"][)]')
